@@ -1,6 +1,6 @@
 # asdf-eksctl
 
-[![Build Status](https://travis-ci.org/elementalvoid/asdf-eksctl.svg?branch=master)](https://travis-ci.org/elementalvoid/asdf-eksctl)
+[![GitHub Actions Status](https://github.com/elementalvoid/asdf-eksctl/workflows/Main%20workflow/badge.svg?branch=master)](https://github.com/elementalvoid/asdf-eksctl/actions)
 
 [eksctl](https://github.com/weaveworks/eksctl) plugin for [asdf](https://github.com/asdf-vm/asdf) version manager
 
