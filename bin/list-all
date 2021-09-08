@@ -14,4 +14,4 @@ function sort_versions() {
 }
 
 # Fetch all tag names, except 'latest_release'.
-echo $(eval "$cmd" | grep -oE "tag_name\": \".{1,15}\"," | grep -v latest_release | sed 's/tag_name\": \"//;s/\",//' | sed 's/^v//' | sort_versions)
+echo $(eval "$cmd" | grep -oE "tag_name\": \".{1,15}\"," | grep -v latest_release | sed 's/tag_name\": \"//;s/\",//; s/^v//; s/",//' | sort_versions)
