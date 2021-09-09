@@ -2,6 +2,9 @@
 
 set -euo pipefail
 
+# shellcheck source=../lib/utils.sh
+source "$(dirname "$0")/../lib/utils.sh"
+
 [[ -z ${ASDF_INSTALL_TYPE} ]] && echo "ASDF_INSTALL_TYPE is required" && exit 1
 [[ -z ${ASDF_INSTALL_VERSION} ]] && echo "ASDF_INSTALL_VERSION is required" && exit 1
 [[ -z ${ASDF_INSTALL_PATH} ]] && echo "ASDF_INSTALL_PATH is required" && exit 1
@@ -25,6 +28,12 @@ install() {
   local install_path="$2//bin/"
   local bin_path="${install_path}/eksctl"
 
+  # Note that we're adding back the 'v' tag prefix only for versions > 0.63
+  # See also: https://github.com/weaveworks/eksctl/issues/4199
+  if ! verlte "0.63.0" "$version"; then
+    version="v${version}"
+  fi
+
   local download_url
   download_url="https://github.com/weaveworks/eksctl/releases/download/${version}/eksctl_${platform}_amd64.tar.gz"
 
@@ -32,6 +41,9 @@ install() {
 
   cd ${tmp_dir}
   echo "Downloading eksctl from ${download_url}"
+
+  # Note that we're adding back the 'v' tag prefix if it exists
+  # See also: https://github.com/weaveworks/eksctl/issues/4199
   curl -sL "$download_url" -o "${tmp_dir}/eksctl_${platform}_${version}.tar.gz"
   tar -xzf ${tmp_dir}/eksctl_${platform}_${version}.tar.gz
   mv ${tmp_dir}/eksctl ${bin_path}
