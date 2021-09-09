@@ -24,13 +24,13 @@ jobs:
       - name: eksctl latest
         env:
           GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        uses: asdf-vm/actions/plugin-test@v1.0.0
+        uses: asdf-vm/actions/plugin-test@v1
         with:
           command: eksctl version
       - name: eksctl <= 0.63.0
         env:
           GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        uses: asdf-vm/actions/plugin-test@v1.0.0
+        uses: asdf-vm/actions/plugin-test@v1
         with:
           version: 0.63.0
           command: eksctl version
