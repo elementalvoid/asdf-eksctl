@@ -9,7 +9,13 @@ source "$(dirname "$0")/../lib/utils.sh"
 [[ -z ${ASDF_INSTALL_VERSION} ]] && echo "ASDF_INSTALL_VERSION is required" && exit 1
 [[ -z ${ASDF_INSTALL_PATH} ]] && echo "ASDF_INSTALL_PATH is required" && exit 1
 [[ ${ASDF_INSTALL_TYPE} != version ]] && echo "install type '${ASDF_INSTALL_TYPE}' is not supported." && exit 1
-[[ $(uname -m) != x86_64 ]] && echo "Sorry i386 (32bit arch) is not supported." && exit 1
+
+supported_archs=("x86_64" "arm64" "aarch64")
+arch="$(uname -m)"
+[[ ! " ${supported_archs[*]} " =~ ${arch} ]] && echo "Sorry, $arch is not supported." && exit 1
+
+# Map aarch64 to arm64 since that's what the GitHub release uses
+[[ $arch = "aarch64" ]] && arch="arm64"
 
 platform="$(uname)"
 if [[  ! (${platform} == Linux || ${platform} == Darwin) ]]; then
@@ -35,7 +41,7 @@ install() {
   fi
 
   local download_url
-  download_url="https://github.com/weaveworks/eksctl/releases/download/${version}/eksctl_${platform}_amd64.tar.gz"
+  download_url="https://github.com/weaveworks/eksctl/releases/download/${version}/eksctl_${platform}_${arch}.tar.gz"
 
   mkdir -p "${install_path}"
 
