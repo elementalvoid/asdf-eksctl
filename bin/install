@@ -14,7 +14,7 @@ supported_archs=("x86_64" "arm64" "aarch64")
 arch="$(uname -m)"
 [[ ! " ${supported_archs[*]} " =~ ${arch} ]] && echo "Sorry, $arch is not supported." && exit 1
 
-# Map aarch64 to arm64 since that's what the GitHub release uses
+# Map aarch64 to arm64 since that's what the GitHub release uses.
 [[ $arch = "aarch64" ]] && arch="arm64"
 
 platform="$(uname)"
