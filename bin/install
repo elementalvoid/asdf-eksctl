@@ -11,10 +11,11 @@ source "$(dirname "$0")/../lib/utils.sh"
 [[ ${ASDF_INSTALL_TYPE} != version ]] && echo "install type '${ASDF_INSTALL_TYPE}' is not supported." && exit 1
 
 arch="$(uname -m)"
-# Map aarch64 to arm64 since that's what the GitHub release uses.
+# Remap names to match GitHub releases.
 [[ $arch = "aarch64" ]] && arch="arm64"
+[[ $arch = "x86_64" ]] && arch="amd64"
 
-supported_archs=("x86_64" "arm64")
+supported_archs=("amd64" "arm64")
 [[ ! " ${supported_archs[*]} " =~ ${arch} ]] && echo "Sorry, $arch is not supported." && exit 1
 
 platform="$(uname)"
