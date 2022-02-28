@@ -35,23 +35,18 @@ install() {
   local install_path="$2//bin/"
   local bin_path="${install_path}/eksctl"
 
-  # Note that we're adding back the 'v' tag prefix only for versions > 0.63
-  # See also: https://github.com/weaveworks/eksctl/issues/4199
-  if ! verlte "0.63.0" "$version"; then
-    version="v${version}"
-  fi
-
   local download_url
-  download_url="https://github.com/weaveworks/eksctl/releases/download/${version}/eksctl_${platform}_${arch}.tar.gz"
+  download_url="https://github.com/weaveworks/eksctl/releases/download/v${version}/eksctl_${platform}_${arch}.tar.gz"
+  alternate_download_url="https://github.com/weaveworks/eksctl/releases/download/${version}/eksctl_${platform}_${arch}.tar.gz"
 
   mkdir -p "${install_path}"
 
   cd ${tmp_dir}
-  echo "Downloading eksctl from ${download_url}"
 
-  # Note that we're adding back the 'v' tag prefix if it exists
-  # See also: https://github.com/weaveworks/eksctl/issues/4199
-  curl -sL "$download_url" -o "${tmp_dir}/eksctl_${platform}_${version}.tar.gz"
+  if ! curl -fsL "$download_url" -o "${tmp_dir}/eksctl_${platform}_${version}.tar.gz"; then
+    curl -fsL "$alternate_download_url" -o "${tmp_dir}/eksctl_${platform}_${version}.tar.gz"
+  fi
+
   tar -xzf ${tmp_dir}/eksctl_${platform}_${version}.tar.gz
   mv ${tmp_dir}/eksctl ${bin_path}
   chmod +x "${bin_path}"
