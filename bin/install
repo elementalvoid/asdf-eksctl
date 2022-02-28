@@ -43,7 +43,7 @@ install() {
 
   cd ${tmp_dir}
   
-  if ! curl -sL "$download_url" -o "${tmp_dir}/eksctl_${platform}_${version}.tar.gz"
+  if ! curl -sL "$download_url" -o "${tmp_dir}/eksctl_${platform}_${version}.tar.gz"; then
     curl -sL "$alternate_download_url" -o "${tmp_dir}/eksctl_${platform}_${version}.tar.gz"
   fi
 
