@@ -6,7 +6,7 @@ set -eo pipefail
 source "$(dirname "$0")/../lib/utils.sh"
 
 releases_path=https://api.github.com/repos/weaveworks/eksctl/releases
-cmd="curl -s"
+cmd="curl -s -L"
 if [[ -n ${GITHUB_API_TOKEN} ]]; then
   cmd="$cmd -H 'Authorization: token ${GITHUB_API_TOKEN}'"
 fi
