@@ -5,7 +5,7 @@ set -eo pipefail
 # shellcheck source=../lib/utils.sh
 source "$(dirname "$0")/../lib/utils.sh"
 
-releases_path=https://api.github.com/repos/weaveworks/eksctl/releases
+releases_path=https://api.github.com/repos/eksctl-io/eksctl/releases
 cmd="curl -s -L"
 if [[ -n ${GITHUB_API_TOKEN} ]]; then
   cmd="$cmd -H 'Authorization: token ${GITHUB_API_TOKEN}'"
